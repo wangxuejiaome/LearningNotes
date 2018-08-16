@@ -88,7 +88,7 @@ public class SortActivity extends AppCompatActivity {
 
 那我们想既然创建的类代码结构都类似，这些类能不能在需要运行的时候，自动生成，而不用在项目中创建这些类文件呢？
 
-![静态代理项目结构](E:\JavaWorkSpace\ThinkInJava\ProxyLearn\image\静态代理项目结构.png)
+![图1 静态代理项目结构](./image/静态代理项目结构.png)
 
 
 
