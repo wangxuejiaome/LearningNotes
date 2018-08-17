@@ -1,4 +1,4 @@
-**需求场景**
+## 需求场景
 
 现有一个 sort.jar 共包含一个 `ISort` 接口和三个实现类，分别为 `BubbleSort`（冒泡排序）、`ChoiceSort`（选择排序）和 `InsertSort`（插入排序）。
 
@@ -19,7 +19,7 @@ public class BubbleSort implements ISort {
 ```
 现在要求项目引入这个 jar 包，并计算出这三种排序方式的耗时。
 
-**静态代理方式**
+## 静态代理方式
 
 完成上面需求有多种实现方式，下面我们给出一种方式来解决上面的问题。
 
@@ -40,7 +40,7 @@ public class BubbleSortProxy implements ISort {
         long start = System.nanoTime();
         int[] intsSorted = mBubbleSort.sort(ints);
         long end = System.nanoTime();
-        System.out.println("costs time : " + (end - start));
+        System.out.println("BubbleSort costs time : " + (end - start));
         return intsSorted;
     }
 }
@@ -65,17 +65,14 @@ public class SortActivity extends AppCompatActivity {
 
         int[] unOrderedInts1 = new int[]{4, 2, 8, 9, 5, 7, 6, 1, 3};
         BubbleSortProxy bubbleSortProxy = new BubbleSortProxy(new BubbleSort());
-        System.out.print("BubbleSort ");
         bubbleSortProxy.sort(unOrderedInts1);
 
         int[] unOrderedInts2 = new int[]{4, 2, 8, 9, 5, 7, 6, 1, 3};
         ChoiceSortProxy choiceSortProxy = new ChoiceSortProxy(new ChoiceSort());
-        System.out.print("ChoiceSort ");
         choiceSortProxy.sort(unOrderedInts2);
 
         int[] unOrderedInts3 = new int[]{4, 2, 8, 9, 5, 7, 6, 1, 3};
         InsertSortProxy insertSortProxy = new InsertSortProxy(new InsertSort());
-        System.out.print("InsertSort ");
         insertSortProxy.sort(unOrderedInts3);
     }
 
@@ -87,13 +84,29 @@ public class SortActivity extends AppCompatActivity {
 14535-14535/wxj.me.proxylearn I/System.out: ChoiceSort costs time : 16590
 14535-14535/wxj.me.proxylearn I/System.out: InsertSort costs time : 16990
 ```
-为了计算出三种算法的排序耗时，我们增加了三个类，现在的项目主要结构如图1所示，假想如果 sort.jar 包中有10中排序方法，我们就会增加10个类，并且每个类的代码结构都是相同的。这种实现方式（也叫静态代理方式）明显的缺点是：当排序实现类很多时，由于是1对1代理，增加了很多类。
+为了计算出三种算法的排序耗时，增加了三个类，每个类都包含了一个排序实现类。我们把`ChoiceSortProxy` 、`InsertSortProxy` 、 `BubbleSortProxy` 称为代理，把 `ChoiceSort `、`InsertSort`、 `BubbleSort`  称为被代理对象，也叫做目标对象，上面的这种实现方式叫做静态代理。
 
-那我们想既然创建的类代码结构都类似，这些类能不能在需要运行的时候，自动生成，而不用在项目中创建这些类文件呢？
+现在的项目主要结构如图1所示，假想如果 sort.jar 包中有10中排序方法，我们就会增加10个类，并且每个类的代码结构都是相同的。这种实现方式明显的缺点是：当排序实现类很多时，由于是1对1代理，增加了很多类。
 
-![图1 静态代理项目结构](./image/静态代理项目结构.png)
+![图1 静态代理项目结构](./image/静态代理项目结构.png) 
 
 
+
+## 创建 SortProxy
+
+在下面的图2中，给出了`ChoiceSortProxy` 与 `InsertSortProxy` 同 `BubbleSortProxy` 三个类的代码。我们可以看到这三个类除了被代理对象的类型不同（不同的地方我用红色的框标出了），代码基本上完全一致。由于目标对象，它们在代理类中进行处理的逻辑是相同的，可以利用类的多态，使用一个代理类，就能对这三个目标对象进行代理，于是可以删掉 `ChoiceSortProxy` 、`InsertSortProxy` 、 `BubbleSortProxy` 这三个类，创建 `SortProxy` 来代理这三个目标对象。
+
+![多态](./image/polymorphism.jpg)
+
+![图2 多态](./image/polymorphsim.png) 
+
+
+
+## 动态创建代理类
+
+从上一节我们实现了使用一个 `SortProxy` 替换掉了 `ChoiceSortProxy` 、`InsertSortProxy` 、 `BubbleSortProxy` 三个代理类。只要被代理的对象实现了 `ISort `接口，希望被测出排序消耗的时间这一需求，就可以用`SortProxy` 进行代理。
+
+可见 `SortProxy` 只能代理实现了 `ISort` 接口的类，那如果现在有一个另外的需求
 
 参考链接：
 
