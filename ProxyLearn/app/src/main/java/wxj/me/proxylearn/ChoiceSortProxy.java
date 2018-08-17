@@ -6,6 +6,9 @@ import wxj.me.sort.BubbleSort;
 import wxj.me.sort.ChoiceSort;
 import wxj.me.sort.ISort;
 
+/**
+ * @author Administrator
+ */
 public class ChoiceSortProxy implements ISort {
 
     ChoiceSort mChoiceSort;
@@ -19,7 +22,7 @@ public class ChoiceSortProxy implements ISort {
         long start = System.nanoTime();
         int [] intsSorted = mChoiceSort.sort(ints);
         long end = System.nanoTime();
-        System.out.println("ChoiceSort costs time : " + (end - start));
+        System.out.println("costs time : " + (end - start));
         return intsSorted;
     }
 }
