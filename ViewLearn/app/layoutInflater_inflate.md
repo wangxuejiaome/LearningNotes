@@ -34,7 +34,7 @@ Window 实现类 PhoneWindow.java 中 layoutInflater 实例获得方式：
     }
 ```
 
-LayoutInflater.from(context); 方法在 LayoutInlater.java 中的实现：
+LayoutInflater.from(context); 方法在 LayoutInflater.java 中的实现：
 
 ```java
 public static LayoutInflater from(Context context) {
@@ -47,7 +47,7 @@ public static LayoutInflater from(Context context) {
     }
 ```
 
-通过上面的三个方法展示，可以看出：获取 LayoutInlfater 实例最初始的代码是 LayoutInflater.java 中的`(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);` 所以在任何时候我们都可以使用该方式获取到 LayoutInflater 实例。在 Activity 中调用 `getLayoutInflater()`更简单便捷，在可以获得 Context 的地方，可以调用简便方法 `LayoutInflater.from(context); `。
+通过上面的三个方法展示，可以看出：获取 LayoutInflater 实例最初始的代码是 LayoutInflater.java 中的`(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);` 所以在任何时候我们都可以使用该方式获取到 LayoutInflater 实例。在 Activity 中调用 `getLayoutInflater()`更简单便捷，在可以获得 Context 的地方，可以调用简便方法 `LayoutInflater.from(context); `。
 
 
 
@@ -63,7 +63,7 @@ public static LayoutInflater from(Context context) {
 
 `public View inflate(XmlPullParser parser, @Nullable ViewGroup root,boolean attachToRoot)`
 
-前面三个方法最终都调用了第 4 种方法。
+前面三个方法最终都调用了第 4 个方法。
 
 ### `inflate(XmlPullParser parser, @Nullable ViewGroup root,boolean attachToRoot) ` 分析
 
