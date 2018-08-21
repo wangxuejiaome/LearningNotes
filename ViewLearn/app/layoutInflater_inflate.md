@@ -19,7 +19,8 @@ Activity 调用 `getLayoutInflater();`
      */
     @NonNull
     public LayoutInflater getLayoutInflater() {
-        return getWindow().getLayoutInflater(); // 调用 window 实例的getLayoutInflater() 方法
+        // 调用 window 实例的getLayoutInflater() 方法
+        return getWindow().getLayoutInflater(); 
     }
 ```
 
@@ -28,7 +29,8 @@ Window 实现类 PhoneWindow.java 中 layoutInflater 实例获得方式：
 ```java
     public PhoneWindow(Context context) {
         super(context);
-        mLayoutInflater = LayoutInflater.from(context); // 可见 getLayoutInflater(); 通过 LayoutInflater.from(context) 拿到 layoutInflater 实例；
+        // 通过 LayoutInflater.from(context) 拿到 layoutInflater 实例；
+        mLayoutInflater = LayoutInflater.from(context);
     }
 ```
 
@@ -36,7 +38,8 @@ LayoutInflater.from(context); 方法在 LayoutInlater.java 中的实现：
 
 ```java
 public static LayoutInflater from(Context context) {
-        LayoutInflater LayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); // 最初始获得 LayoutInflater 实例的代码；
+        // 最初始获得 LayoutInflater 实例的代码；
+        LayoutInflater LayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
         if (LayoutInflater == null) {
             throw new AssertionError("LayoutInflater not found.");
         }
