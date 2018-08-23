@@ -1,10 +1,17 @@
+
+
+
+
+
+
 ## 实现思路
+
 1. 根据用户设置的图片，绘制九张图片
 2. 根据用户设置的大小，计算图片的位置
 3. 手势滑动显示路线
 4. 回调封装
 
-## 用到的相关知识点
+
 
 ## ViewRootImp 和 DecorView
 **ViewRootImp 是什么？**
@@ -49,7 +56,7 @@ View 的 MeasureSpec 决定了 View 的测量宽、高。View 的 MeasureSpec �
 
 
 
-####DecorView MesureSpec 创建过程
+#### DecorView MesureSpec 创建过程
 
 ViewRootImpl 中的 measureHierarchy 方法中有如下一段代码，展示了 DecoView 的 MeasureSpec 的创建过程。其中 desiredWindowWidth 和 desireWindowHeight 是屏幕的尺寸。
 
@@ -101,8 +108,7 @@ getRootMeasureSpec 方法的具体实现如下：
 * 固定大小（如：100dp）：精确模式，大小就是 LayoutParams 中指定的大小。
 
 
-
-#####DecorView 的 LayoutParams 是在哪里设置的？
+##### DecorView 的 LayoutParams 是在哪里设置的？
 
 ViewRootImpl 中有如下代码：
 
@@ -277,19 +283,90 @@ performTraversals 的大致流程图如下：
 
 
 
-* measure 测量完成后，可以通过 getMeasureWidth 和 getMeasureHeigth 来获取 View **测量** 宽、高，几乎所有的情况下它都等同于 View 最终的宽高，但也有特殊情况。
+* measure 测量完成后，可以通过 getMeasureWidth 和 getMeasureHeigth 来获取 View **测量**宽、高，几乎所有的情况下它都等同于 View 最终的宽高，但也有特殊情况。
 * Layout 过程决定了 View 的四个顶点的坐标和实际的 View 宽高，完成后，可通过 getTop、getBottom 来获取 View 的顶点位置。
 * Draw 过程决定了 View 的显示，只有 draw 方法完成后，View 的内容才能呈现在屏幕上。
 
 
+### measure 流程
 
-### 绘制流程
-* widthMeasureSpec 和 heightMeasureSpec 决定了 View 的宽度、高度的规格和大小。
-* widthMeasureSpec 和 heightMeasureSpec 从哪里得到？ 这两个值是通过父视图通过计算后传递给子视图的。最顶层的视图，它的这两个值是如何计算出来的呢？
-* 父视图中是如何计算出这两个值的？
+View 是所有控件的父类，GroupView 继承自 View 是一个抽象类，这里我们将直接继承自 View 的控件称为节点 View，它没有子 View。将直接或间接继承自 GroupView 称作 GroupView，它可以包含子 View。Android 常用的控件继承结构图如下，其中 TextView 、ImageView、GroupView 我们这里称作节点 View  也称普通 View。
 
-## layout 流程
+![View继承关系](./image/View继承关系.png)
 
 
 
-## Draw 流程
+#### View 中测量的默认实现
+
+视图通过调用 measure方法来测量自身的大小，View.java 中的 measure 方法是 final 类型，子类不可以重写该方法，在 measure 中调用了 onMeasure 中子类可以通过重写 onMeasure 方法来实现自己的测量逻辑。
+
+View.java 中的 onMeasure 方法实现：
+
+```java
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+```
+
+onMeasure 用来测量 View 的大小，子类可以重写该方法已实现自己的逻辑。如果不重写该方法，则会使用 View中默认的测量实现，会依次调用下面相关方法。
+
+getDefaultSize 方法实现：
+
+```java
+    public static int getDefaultSize(int size, int measureSpec) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        switch (specMode) {
+        case MeasureSpec.UNSPECIFIED:
+            result = size;
+            break;
+        case MeasureSpec.AT_MOST:
+        case MeasureSpec.EXACTLY:
+            result = specSize;
+            break;
+        }
+        return result;
+    }
+```
+
+getDefaultSize 的第一参数传入的是 getSuggestedMinimumWidth() 返回结果，该结果在 UNSPECIFIED 模式下作为 View 的测量大小；
+
+在 EXACTLY、AT_MOST 两种情况下，返回的就是 measureSpec 中的 specSize，即 View 测量后的大小。
+
+大多数情况下 specMode 会是  EXACTLY、AT_MOST，所以可以简单的认为，getDefaultSize 返回的大小就是 measureSpec 中的 specSize。
+
+getSuggestedMinimumWidth 方法实现：
+
+```java
+    protected int getSuggestedMinimumWidth() {
+        return (mBackground == null) ? mMinWidth : max(mMinWidth,mBackground.getMinimumWidth());
+    }
+```
+
+mMinWidth 对应 android:minWidth 属性值，没有背景则返回 mMinWidth，该属性不设置时默认为 0。
+
+有背景，则返回背景大小与 mMinWidth 中的较大者。
+
+getMinimumWidth 方法实现：
+
+```java
+public int getMinimumWidth() {
+    final int intrinsicWidth = getIntrinsicWidth();
+    return intrinsicWidth > 0 ? intrinsicWidth : 0;
+}
+```
+
+返回的是 Drawable 的原始宽度，如果这个 Drawable 没有原始宽度，就返回 0。什么时候会没有原始宽度呢？ShapeDrawable 是没有原始宽高的。
+
+
+
+View.java 默认测量涉及到的相关的方法调用关系如下：
+
+![测量调用方法](E:\LearningNotes\GestureLockDemo\image\测量调用方法.png)
+
+### layout 流程
+
+### draw 流程
