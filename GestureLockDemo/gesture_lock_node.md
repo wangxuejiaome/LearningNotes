@@ -262,7 +262,37 @@ ViewGroup 中的 View.sUseZeroUnspecifiedMeasureSpec = targetSdkVersion < Build.
 |                 AT_MOST                  | EXACTY / childSize |      AT_MOST / size      |      AT_MOST / size      |
 |               UNSPECIFIED                | EXACTY / childSize | UNSPECIFIED /   0 或 size | UNSPECIFIED /   0 或 size |
 
+##### 实例验证子 View MeasureSpec 创建
 
+根据上面表格中的规则，我们用例子来验证一下，就取父容器是 EXACTLY，子 View 是具体大小的情况，这时子 View 的 SepcMode 为 EXACTLY，SepcSize 为 childSize。
+
+我们在 activity_main 中的代码如下：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="40dp"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:text="Hello xxn！"/>
+
+</LinearLayout>
+```
+
+ 由于宽度和高度的分析过程类似，我们就只验证子 View 的 widthMeasureSpec。从上面的布局可以看出，父控件 LinearLayout 宽度为 40dp，子 View TextView 的宽度我们设置为了 50dp，子 View 的宽度比父 View 大。那按照表格中的规则，测量出子 View 的宽度MeasureSpec 应该是 SpecMode = EXACTLY，SpecSize = 50dp。这样子 View 的宽度大于父容器宽度，应该是显示不全。下面的调试与运行结果与我们的规则一致。
+
+![EXACTLY_dp](./image/EXACTLY_dp.png)
+
+![childWidthMeasureSpec](./image/childWidthMeasureSpec.png)
+
+测试机使用的是分辨率是 720 * 1080，这里 1dp = 2px。从上面的图中我们可以看到调试结果，父容器的可用大小为 80px，子 View 的测量宽度为大小为 100px，测量模式和父容器相同都是 EXACTLY 模式。验证规则与表格一致，此时子 View 大小超过了父容器的宽度大小，导致了子 View 出现了显示不完全的现象。子 View TextView 完全显示应该显示的是 Hello xxn，由于没有显示完全，只显示出了 Hello。因此，在明白子 View 的测量流程之后，我们在以后的布局中，要注意使子 View 的大小劲量不要超过父容器的可用大小。
+
+![显示效果](./image/result.png)
 
 ## View 工作流程
 
