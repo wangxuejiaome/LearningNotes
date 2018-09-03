@@ -21,3 +21,4 @@ public class LayoutInflaterActivity extends AppCompatActivity {
         FrameLayout inflateResult = (FrameLayout) getLayoutInflater().inflate(R.layout.button_layout,flContainer);
     }
 }
+
