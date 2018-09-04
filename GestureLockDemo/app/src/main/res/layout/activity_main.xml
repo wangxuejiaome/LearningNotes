@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="40dp"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
+    android:layout_width="200dp"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="50dp"
-        android:layout_height="20dp"
-        android:text="Hello xxn！"/>
+    <wxj.gesturelockdemo.GestureLock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bitmap_normal="@mipmap/ic_finger_normal"
+        app:bitmap_press="@mipmap/ic_finger_press"
+        android:background="@color/colorAccent"/>
 
 </LinearLayout>
