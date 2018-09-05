@@ -30,6 +30,10 @@ public class GestureLock extends View {
      * 图形之间的间隔，每行或每列有 4 个间隔
      */
     private int mSpace;
+    /**
+     * 设置的图片大小
+     */
+    private int mBitmapSize;
 
     public GestureLock(Context context) {
         super(context);
@@ -41,6 +45,7 @@ public class GestureLock extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GestureLock);
         mBitmapNormal = (BitmapDrawable) typedArray.getDrawable(R.styleable.GestureLock_bitmap_normal);
         mBitmapPress = (BitmapDrawable) typedArray.getDrawable(R.styleable.GestureLock_bitmap_press);
+        mSpace = typedArray.getInteger(R.styleable.GestureLock_space,0);
         typedArray.recycle();
         init();
     }
@@ -57,25 +62,31 @@ public class GestureLock extends View {
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
 
-        mGestureLockSize =  Math.max(widthSpecSize,heightSpecSize);
-        int bitmapSize = mBitmapNormal.getIntrinsicWidth();
-        int space = (mGestureLockSize - bitmapSize * 3) / 4;
-        mSpace = space > 0 ? space : 0;
+        mBitmapSize = mBitmapNormal.getIntrinsicWidth();
+
+        if(mSpace == 0){
+            // 如果没有设置 space 属性，则根据系统测量的大小来自己测算space
+            mGestureLockSize =  Math.min(widthSpecSize,heightSpecSize);
+            int space = (mGestureLockSize - mBitmapSize * 3) / 4;
+            mSpace = space > 0 ? space : 0;
+        }else {
+            // 根据给定的 space 来决定 GestureLock 的大小
+            mGestureLockSize = mBitmapSize * 3 + mSpace * 4;
+        }
 
         setMeasuredDimension(MeasureSpec.makeMeasureSpec(mGestureLockSize,widthSpecMode),MeasureSpec.makeMeasureSpec(mGestureLockSize,heightSpecMode));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Bitmap bitmapNormal = mBitmapNormal.getBitmap();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                //int top =
+
+        for (int row = 1; row <= 3; row++) {
+            for (int col = 1; col <= 3; col++) {
+                int left = (col - 1) * mBitmapSize + col * mSpace;
+                int top = (row -1) * mBitmapSize + row * mSpace;
+                canvas.drawBitmap(mBitmapNormal.getBitmap(),left,top,new Paint());
             }
         }
-
-        //super.onDraw(canvas);
-        canvas.drawBitmap(mBitmapNormal.getBitmap(),0,0,new Paint());
     }
 
     private void init() {

@@ -3,5 +3,6 @@
     <declare-styleable name="GestureLock">
         <attr name="bitmap_normal" format="reference"/>
         <attr name="bitmap_press" format="reference"/>
+        <attr name="space" format="integer|dimension"/>
     </declare-styleable>
 </resources>
