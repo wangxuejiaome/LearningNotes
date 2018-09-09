@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".datastore.DataStoreActivity">
+
+    <Button
+        android:id="@+id/btn_file_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="文件写"
+        app:layout_constraintEnd_toStartOf="@+id/btn_file_read"
+        app:layout_constraintHorizontal_bias="0.389"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_file_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:text="文件读"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_file_write"/>
+
+    <Button
+        android:id="@+id/btn_sp_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="SP写"
+        app:layout_constraintStart_toStartOf="@+id/btn_file_write"
+        app:layout_constraintTop_toBottomOf="@+id/btn_file_write"/>
+
+    <Button
+        android:id="@+id/btn_sp_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="SP读"
+        app:layout_constraintEnd_toEndOf="@+id/btn_file_read"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_sp_write"
+        app:layout_constraintTop_toTopOf="@+id/btn_sp_write"/>
+
+</android.support.constraint.ConstraintLayout>
