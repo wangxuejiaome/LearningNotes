@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".datastore.DataStoreActivity">
         </activity>
+        <activity android:name=".fragment.ContainerActivity">
+        </activity>
     </application>
 
 </manifest>
