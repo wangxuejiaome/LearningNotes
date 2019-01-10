@@ -38,7 +38,7 @@ public class BookManagerImpl extends Binder implements IBookManager {
     }
 
     @Override
-    protected boolean onTransact(int code, @androidx.annotation.NonNull Parcel data, @androidx.annotation.Nullable Parcel reply, int flags) throws RemoteException {
+    protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         switch (code) {
             case INTERFACE_TRANSACTION: {
                 reply.writeString(DESCRIPTOR);

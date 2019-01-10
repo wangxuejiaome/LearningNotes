@@ -11,16 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+        </activity>
+        <activity
+            android:name=".SecondActivity"
+            android:process=":remote" />
+        <activity
+            android:name=".ThirdActivity"
+            android:process="wxj.ipclearn.remote" />
+
+        <service
+            android:name="wxj.ipclearn.messenger.MessengerService"
+            android:process=":remote" />
+
+        <activity android:name=".messenger.MessengerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity"
-            android:process=":remote"/>
-        <activity android:name=".ThirdActivity"
-            android:process="wxj.ipclearn.remote"/>
     </application>
 
 </manifest>
