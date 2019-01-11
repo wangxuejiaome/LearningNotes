@@ -1,4 +1,4 @@
-package wxj.ipclearn;
+package wxj.aidlservicetest;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,15 +14,11 @@ import android.util.Log;
 
 import java.util.List;
 
-import wxj.aidlservicetest.Book;
-import wxj.aidlservicetest.IBookManager;
-import wxj.aidlservicetest.IOnNewBookArrivedListener;
-
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    public static final String TAG = "MainActivity";
     private static final int MESSAGE_NEW_BOOK_ARRIVED = 1;
-    IBookManager mBookManager;
+    private IBookManager mBookManager;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -37,26 +33,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Intent intent = new Intent();
-        intent.setAction("wxj.remote.call");
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-
-    }
-
-    ServiceConnection serviceConnection = new ServiceConnection() {
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBookManager = IBookManager.Stub.asInterface(service);
-
             try {
                 List<Book> list = mBookManager.getBookList();
                 Log.i(TAG, "query book list: " + list.toString());
-                Book newBook = new Book(3, "Android 开发艺术探索");
+                Book newBook = new Book(3, "Android 进阶");
+                Log.i(TAG, "add book:" + newBook);
                 mBookManager.addBook(newBook);
                 List<Book> newList = mBookManager.getBookList();
                 Log.i(TAG, "query book list: " + newList.toString());
@@ -69,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            mBookManager = null;
+            Log.e(TAG, "onServiceDisconnected: binder died");
         }
     };
 
@@ -82,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this, BookManagerService.class);
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     @Override
     protected void onDestroy() {
         if (mBookManager != null && mBookManager.asBinder().isBinderAlive()) {
@@ -92,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        unbindService(serviceConnection);
+        unbindService(mServiceConnection);
         super.onDestroy();
     }
 }
