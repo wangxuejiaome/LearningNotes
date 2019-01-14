@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="wxj.ipclearn">
 
+    <uses-permission android:name="wxj.ipclearn.PROVIDER"/>
+
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -11,18 +13,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
+        </activity>
+
+        <service
+            android:name=".messenger.MessengerService"
+            android:process=":remote" />
+
+        <activity android:name=".messenger.MessengerActivity"></activity>
+
+
+        <provider
+            android:name=".contentprovider.BookProvider"
+            android:authorities="wxj.ipclearn.contentprovider.BookProvider"
+            android:permission="wxj.ipclearn.PROVIDER"
+            android:process=":provider"
+          />
+
+        <activity android:name=".contentprovider.ProviderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <service
-            android:name="wxj.ipclearn.messenger.MessengerService"
-            android:process=":remote" />
-
-        <activity android:name=".messenger.MessengerActivity">
         </activity>
     </application>
 
