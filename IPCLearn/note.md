@@ -8,4 +8,6 @@
 
 ### 自定义 ContentProvider
 
-1. 继承 `ContentProvider`  类，并实现六个抽象方法：onCreate、query、update、insert、delete 和 getType，并在 AndroidManifest.xml 中注册；
+1. 创建  `BookProvider`  继承 `ContentProvider`  类，并实现六个抽象方法：onCreate、query、update、insert、delete 和 getType，并在 AndroidManifest.xml 中注册；
+2. 创建一个数据库来管理图书和用户信息，在 SQLiteOpenHelper 中创建用户和书籍两张表；
+3. `BookProvide` 向外界提供数据库信息，使用 Uri 对应到对应表的名称，然后做增删改查操作；
