@@ -10,6 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+        </activity>
+
+        <service android:name=".BookManagerService">
+            <intent-filter>
+                <action android:name="wxj.remote.call" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".binderpool.BinderPoolService"
+            android:process=":remote"/>
+        <activity android:name=".BinderPoolActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,13 +28,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="wxj.aidlservicetest.BookManagerService">
-
-            <intent-filter>
-                <action android:name="wxj.remote.call"/>
-            </intent-filter>
-
-        </service>
     </application>
 
 </manifest>
