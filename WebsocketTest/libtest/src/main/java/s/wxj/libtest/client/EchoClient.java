@@ -1,11 +1,12 @@
 package s.wxj.libtest.client;
 
-import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -46,32 +47,62 @@ public class EchoClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             System.out.println("正在连接中.....");
-                            ch.pipeline().addLast(new StringEncoder(Charset.forName("GBK")));
+                            //ch.pipeline().addLast(new StringEncoder(Charset.forName("GBK")));
                             ch.pipeline().addLast(new EchoClientHandler());
-                            ch.pipeline().addLast(new ByteArrayEncoder());
-                            ch.pipeline().addLast(new ChunkedWriteHandler());
+                            //ch.pipeline().addLast(new ByteArrayEncoder());
+                            //ch.pipeline().addLast(new ChunkedWriteHandler());
                         }
                     });
             //ChannelFuture channelFuture = bootstrap.connect().sync();
-            Channel mChannel = bootstrap.connect(host, port).sync().channel();
-            mChannel.writeAndFlush("11111111111").addListener(new GenericFutureListener() {
+            final Channel mChannel = bootstrap.connect(host, port).sync().channel();
+            System.out.println("服务端连接成功...");
+
+            String sendContent = "客户端我第一次发数据给服务器\n";
+            ByteBuf seneMsg = Unpooled.buffer(sendContent.length());
+            seneMsg.writeBytes(sendContent.getBytes());
+
+            mChannel.writeAndFlush(seneMsg).addListener(new GenericFutureListener() {
                 @Override
                 public void operationComplete(Future future) throws Exception {
 //
-                    System.out.println(" future.isSuccess()..." +  future.isSuccess());
+                    System.out.println(" future.isSuccess()..." + future.isSuccess());
+
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (true){
+
+                                try {
+                                    TimeUnit.MILLISECONDS.sleep(2000);
+
+
+                                    String sendContent = "客户端发送消息\n";
+                                    ByteBuf seneMsg = Unpooled.buffer(sendContent.length());
+                                    seneMsg.writeBytes(sendContent.getBytes());
+                                    mChannel.writeAndFlush(seneMsg);
+
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+                    }).start();
+
                 }
             });
-            System.out.println("服务端连接成功...");
+
 //            channelFuture.channel().closeFuture().sync();`
 //            System.out.println("连接已关闭....");
         } finally {
-            group.shutdownGracefully().sync();
+            //group.shutdownGracefully().sync();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        //new EchoClient("127.0.0.1", 8888).star();
-        new EchoClient("121.40.165.18", 8800).star();
+        new EchoClient("127.0.0.1", 8888).star();
+        //new EchoClient("121.40.165.18", 8800).star();
     }
 
 }

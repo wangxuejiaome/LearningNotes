@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_start:
                 /*"ws://echo.websocket.org"*/
                 /*"ws://10.49.24.61:8083/push-agent/websocket"*/
-                mHttpWebSocketHelper = new OkHttpWebSocketHelper.Config("ws://biuoscnsit-h2.cnsuning.com/push-agent/websocket")
+                /*ws://10.49.24.107:8080/push-agent/websocket*/
+                /*ws://biuoscnsit-h2.cnsuning.com/push-agent/websocket*/
+                mHttpWebSocketHelper = new OkHttpWebSocketHelper.Config("ws://10.49.24.107:8080/push-agent/websocket")
                         .maxRetryCount(8)
                         .heartBeatInterval(5000)
                         .setWebSocketCallback(webSocketCallback)
