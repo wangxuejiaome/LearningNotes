@@ -47,11 +47,16 @@ public class EchoServer {
             // 服务器异步创建绑定
             ChannelFuture channelFuture = serverBootstrap.bind().sync();
             System.out.println(EchoServer.class + "启动正在监听：" + channelFuture.channel().localAddress());
-            channelFuture.channel().closeFuture().sync();// 关闭服务器通道
-        } finally {
+            //channelFuture.channel().closeFuture().sync();// 关闭服务器通道
+        } catch (Exception e){
+
+        }
+
+
+        /*finally {
             group.shutdownGracefully().sync();//释放线程池资源
             bossGroup.shutdownGracefully().sync();
-        }
+        }*/
     }
 
     public static void main(String[] args) throws Exception {

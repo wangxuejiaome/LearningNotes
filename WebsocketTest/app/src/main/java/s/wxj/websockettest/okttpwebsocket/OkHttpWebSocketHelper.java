@@ -107,7 +107,8 @@ public class OkHttpWebSocketHelper {
             webSocket.close(CLOSED_CODE, TextUtils.isEmpty(reason) ? reason : "{\"deviceId\":\"445454564654\"}");
             webSocket = null;
         }
-        workHandler.removeMessages(HEART_MESSAGE);
+        mainHandler.removeCallbacksAndMessages(null);
+        workHandler.removeCallbacksAndMessages(null);
     }
 
     /**

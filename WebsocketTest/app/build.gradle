@@ -27,5 +27,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation("com.squareup.okhttp3:okhttp:3.12.1")
     implementation 'io.netty:netty-all:4.1.13.Final'
-
 }
