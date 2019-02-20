@@ -14,7 +14,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -32,24 +31,6 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 
-/**
- * 需求：
- * 1. 用户只需要传入 host 和 port 就可以连接上服务器；
- * 2. 用户在连接上服务的时候可以做操作；
- * 3. 用户可以发送消息；
- * 4. 用户可以接收到消息，并且在接收到消息后，可以做操作
- * 5. 连接失败了需要通知用户，用户可以做相应的操作
- * 6. 失败了系统可以支持自动重连；
- * 7. 用户可以主动关闭连接
- * 8. 发送心跳
- * <p>
- * 实现思路：
- * 1. 先将该类设计成单例模式
- * <p>
- * <p>
- * 疑问：
- * 1. 在 initChannel 时，mainHandler 的设置有先后顺序么？
- */
 public class NettySocketHelper {
 
     private static final String TAG = "NettySocketHelper";
@@ -127,43 +108,19 @@ public class NettySocketHelper {
         workHandler = new Handler(workThread.getLooper(), workHandlerCallback);
     }
 
-
-    /*ws://10.49.24.61:8083/push-agent/websocket*/
-    /*ws://biuoscnsit-h2.cnsuning.com:80/push-agent/websocket*/
-    // URI socketUrl = new URI("ws://10.49.24.61:8083/push-agent/websocket");
-    // channel = bootstrap.connect(socketUrl.getHost(), socketUrl.getPort()).sync().channel();
-
     public void connect() {
 
         NioEventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
-       /* bootstrap.group(group)
-                .channel(NioSocketChannel.class)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
-                        ch.pipeline().addLast(new ChunkedWriteHandler());
-                        if (channelHandler == null) {
-                            ch.pipeline().addLast(new EchoClientHandler(NettySocketHelper.this));
-                        } else {
-                            ch.pipeline().addLast(channelHandler);
-                        }
-                    }
-                });*/
-
-        bootstrap.option(ChannelOption.SO_KEEPALIVE, true)
-                .option(ChannelOption.TCP_NODELAY, true)
-                .option(ChannelOption.SO_BACKLOG, 1024 * 1024 * 10)
+        bootstrap
                 .group(group)
-                .handler(new LoggingHandler(LogLevel.INFO))
                 .channel(NioSocketChannel.class)
+                .handler(new LoggingHandler(LogLevel.INFO))
                 .handler(new ChannelInitializer<SocketChannel>() {
                     protected void initChannel(SocketChannel socketChannel) {
                         ChannelPipeline channelPipeline = socketChannel.pipeline();
-                        channelPipeline.addLast(new HttpClientCodec(),
-                                new HttpObjectAggregator(1024 * 1024 * 10));
-                        channelPipeline.addLast("hookedHandler", new WebSocketClientHandler(NettySocketHelper.this));
+                        channelPipeline.addLast(new HttpClientCodec(), new HttpObjectAggregator(1024 * 1024 * 10));
+                        channelPipeline.addLast("hookedHandler", new EchoClientHandler(NettySocketHelper.this));
                     }
                 });
 
@@ -184,24 +141,6 @@ public class NettySocketHelper {
             handShaker.handshake(channel);
             //阻塞等待是否握手成功
             handler.handshakeFuture().sync();
-
-           /* Map<String, String> requestMap = new HashMap<String, String>();
-            requestMap.put("deviceId", "AI-BOX-13");
-            requestMap.put("userAgent", "BiuOS-TV/1.0");
-            requestMap.put("custNo", "12345");
-            //JSONObject json =new JSONObject(requestMap);
-            *//*{"deviceId":"w4e3454","userAgent":"BiuOS-TV/1.0","custNo":"4355878"}*//*
-            TextWebSocketFrame frame = new TextWebSocketFrame("{\"deviceId\":\"w4e3454\",\"userAgent\":\"BiuOS-TV/1.0\",\"custNo\":\"4355878\"}");
-            channel.writeAndFlush(frame).addListener(new ChannelFutureListener() {
-                public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if (channelFuture.isSuccess()) {
-                        System.out.println("text send success");
-                    } else {
-                        System.out.println("text send failed  " + channelFuture.cause().getMessage());
-                    }
-                }
-            });*/
-
 
         } catch (Exception e) {
             reconnect();

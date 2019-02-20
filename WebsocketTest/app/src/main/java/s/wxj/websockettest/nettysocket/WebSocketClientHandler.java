@@ -82,7 +82,6 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
         nettySocketHelper.mainHandler.sendEmptyMessage(NettySocketHelper.ON_CHANNEL_INACTIVE);
     }
 
-
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         nettySocketHelper.workHandler.removeMessages(NettySocketHelper.HEART_MESSAGE);

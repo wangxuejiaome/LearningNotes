@@ -153,8 +153,6 @@ public class OkHttpWebSocketHelper {
 
     public class EchoWebSocketListener extends WebSocketListener {
 
-        static final String TAG = "EchoWebSocketListener";
-
         OkHttpWebSocketHelper okHttpWebSocketHelper;
 
         public EchoWebSocketListener(OkHttpWebSocketHelper okHttpWebSocketHelper) {
@@ -172,7 +170,6 @@ public class OkHttpWebSocketHelper {
             workHandler.sendEmptyMessage(HEART_MESSAGE);
             // 重连次数重置为 0
             alReadyConnectCount = 0;
-            Log.d(TAG, "onOpen ===> client receive：" + response.toString());
         }
 
         @Override
@@ -181,7 +178,6 @@ public class OkHttpWebSocketHelper {
             message.what = ON_MESSAGE_STRING;
             message.obj = text;
             mainHandler.sendMessage(message);
-            Log.d(TAG, "onMessage ===> client receive：" + text);
         }
 
         @Override
@@ -190,7 +186,6 @@ public class OkHttpWebSocketHelper {
             message.what = ON_MESSAGE_STRING;
             message.obj = bytes;
             mainHandler.sendMessage(message);
-            Log.d(TAG, "onMessage===> client receive: " + bytes);
         }
 
         @Override
@@ -201,7 +196,6 @@ public class OkHttpWebSocketHelper {
             message.arg1 = code;
             message.obj = reason;
             mainHandler.sendMessage(message);
-            Log.d(TAG, "onClosing ===>" + "code：" + code + ",reason: " + reason);
         }
 
         @Override
@@ -211,7 +205,6 @@ public class OkHttpWebSocketHelper {
             message.arg1 = code;
             message.obj = reason;
             mainHandler.sendMessage(message);
-            Log.d(TAG, "onClosed ===>" + "code：" + code + ",reason: " + reason);
         }
 
         @Override
@@ -220,9 +213,7 @@ public class OkHttpWebSocketHelper {
             message.what = ON_FAILURE;
             message.obj = response;
             mainHandler.sendMessage(message);
-
             reconnect();
-            Log.d(TAG, "onFailure===> " + t.getMessage());
         }
     }
 

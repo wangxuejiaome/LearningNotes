@@ -92,7 +92,6 @@ public class NettySocketActivity extends AppCompatActivity implements View.OnCli
                 nettySocketHelper.connect();
                 break;
             case R.id.btn_send:
-
                 Map<String, String> requestMap = new HashMap<String, String>();
                 requestMap.put("deviceId", "AI-BOX-13");
                 requestMap.put("userAgent", "BiuOS-TV/1.0");
