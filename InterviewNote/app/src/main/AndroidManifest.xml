@@ -9,13 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activitychapter.ESingleTaskActivity"></activity>
         <activity
-            android:name=".activitychapter.CActivity"
-            android:launchMode="singleTask"></activity>
+            android:name=".activitychapter.DSingleTaskActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.wxj.interview1" />
         <activity
-            android:name=".activitychapter.BActivity"
-            android:launchMode="singleInstance" />
-        <activity android:name=".activitychapter.AActivity" />
+            android:name=".activitychapter.CSingleTaskActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.wxj.interview1" />
+        <activity android:name=".activitychapter.BActivity" />
+        <activity
+            android:name=".activitychapter.AActivity"
+            android:configChanges="orientation" />
+        <activity android:name=".activitychapter.ActivityChapterHomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wxj.interview.activitychapter.AActivity;
+import com.wxj.interview.activitychapter.ActivityChapterHomeActivity;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class ContentsAdapter extends RecyclerView.Adapter<ContentsAdapter.Conten
             public void onClick(View v) {
                 switch (position) {
                     case 0:
-                        mContext.startActivity(new Intent(mContext, AActivity.class));
+                        mContext.startActivity(new Intent(mContext, ActivityChapterHomeActivity.class));
                         break;
                 }
             }

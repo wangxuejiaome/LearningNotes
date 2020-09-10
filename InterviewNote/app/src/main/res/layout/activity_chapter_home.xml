@@ -4,14 +4,23 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".activitychapter.AActivity">
+tools:context=".activitychapter.ActivityChapterHomeActivity">
+
 
 <Button
-    android:id="@+id/button"
+    android:id="@+id/btn_go_a_activity"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="启动 BActivity 生命周期方法"
+    android:text="跳转到 AActivity"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
+<Button
+    android:id="@+id/btn_go_c_single_task_activity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="跳转到 CSingleInstanceActivity"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/btn_go_a_activity"
+    app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
