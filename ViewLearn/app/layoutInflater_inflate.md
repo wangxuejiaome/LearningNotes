@@ -153,7 +153,7 @@ public static LayoutInflater from(Context context) {
                   
                     // Decide whether to return the root that was passed in or the
                     // top view found in xml.
-                    // 6.根据 root 和 attachToRoot 的值，最终判读是返回 root 还是返回 xml 解析的View 
+                    // 6.根据 root 和 attachToRoot 的值，最终判读是返回 root 还是返回 xml 解析的顶层View 
                     if (root == null || !attachToRoot) {
                         result = temp;
                     }
@@ -190,7 +190,7 @@ public static LayoutInflater from(Context context) {
 3. 判断传入的 root 是否为空，不为空则根据 xml 的 attrs 生成 layoutParams，并在 attachToRoot == false 的情况下，将 layoutParams 设置给 xml 的顶级 View；
 4. 将 xml 根 View 中包含的所有子节点，解析为 View；
 5. 判断是否为 xml 解析成的 View 树，提供了父 View（root），当 root ！= null  &&  attachToRoot  == true 的情况下，将 xml 解析成的 View，加入到 root 中。
-6. 根据 root 和 attachToRoot 的值，最终判读是返回 root 还是返回 xml 解析的View。 
+6. 根据 root 和 attachToRoot 的值，最终判断是返回 root 还是返回 xml 解析的View。 
 
 ### 实例运用
 
@@ -285,7 +285,7 @@ public class LayoutInflaterActivity extends AppCompatActivity {
 
 可见当 LayoutParams 为空的时候，或调用 generateDefaultLayoutParams(); 生成默认的 LayoutParams 。所以运行的结果没有按我们的预期显示。
 
-##### root == null && attachToRoot == false 情景
+##### root != null && attachToRoot == false 情景
 
 现在我们修改 activity_layout_inflater.xml 布局，添加一个 FrameLayout 容器，修改后代码如下：
 
@@ -334,7 +334,7 @@ public class LayoutInflaterActivity extends AppCompatActivity {
 
 我们可以看到，button 没有包含在  FrameLayout 中，大小也与我们预期相同。因为 button 设置的 layoutParams 在添加到 llActivity 中时生效了，验证了我们结果2。
 
-##### root == null && attachToRoot == ture 情景
+##### root != null && attachToRoot == ture 情景
 
 现在我们再修改一下 LayoutInflaterActivity.java 中的代码，将 button 添加到 FrameLayout 容器中：
 

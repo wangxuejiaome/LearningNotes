@@ -213,6 +213,7 @@ public class OkHttpWebSocketHelper {
             message.what = ON_FAILURE;
             message.obj = response;
             mainHandler.sendMessage(message);
+            Log.d(TAG, "failureResponse:" + t.getMessage());
             reconnect();
         }
     }

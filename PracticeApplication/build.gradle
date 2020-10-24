@@ -3,14 +3,13 @@
 buildscript {
     
     repositories {
-        mavenCentral()
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public'}
+        mavenLocal()
         jcenter()
         google()
-        mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         
 
         // NOTE: Do not place your application dependencies here; they belong

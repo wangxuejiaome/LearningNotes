@@ -83,7 +83,7 @@ public class NettySocketActivity extends AppCompatActivity implements View.OnCli
                 // ws://10.49.24.107:8080/push-agent/websocket
                 /*ws://10.49.24.60:8888/ws*/
                 nettySocketHelper = new NettySocketHelper.Config()
-                        .host("10.49.24.60")
+                        .host("10.37.198.203")
                         .port(80)
                         .heartBeatInterval(2000)
                         .maxRetryCount(8)

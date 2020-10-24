@@ -120,7 +120,7 @@ public class NettySocketHelper {
                     protected void initChannel(SocketChannel socketChannel) {
                         ChannelPipeline channelPipeline = socketChannel.pipeline();
                         channelPipeline.addLast(new HttpClientCodec(), new HttpObjectAggregator(1024 * 1024 * 10));
-                        channelPipeline.addLast("hookedHandler", new EchoClientHandler(NettySocketHelper.this));
+                        channelPipeline.addLast("hookedHandler", new WebSocketClientHandler(NettySocketHelper.this));
                     }
                 });
 
