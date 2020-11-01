@@ -1,2 +1,3 @@
+include ':Groovy'
 include ':algorithm'
 include ':app', ':javase'
