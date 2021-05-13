@@ -1,0 +1,28 @@
+* {
+	font-family: "微软雅黑";
+	font-weight: 400;
+}
+h1 {
+	font-size: 30px;
+	text-align: center;
+}
+h6 {
+	text-align: center;
+}
+p {
+	font-size: 14px;
+	text-align: left;
+	text-indent: 2em;/*段落首行缩进2个字符*/
+}
+.orange {
+	color: orange;
+}
+.red {
+	color: red;
+}
+.gray{
+	color: gray;
+}
+.skyblue {
+	color: skyblue;
+}

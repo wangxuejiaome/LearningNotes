@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>行内元素与块级元素及其转换</title>
+	<link rel="stylesheet" type="text/css" href="css/block_inline.css">
+</head>
+<body>
+	<!-- 需求：
+		* 写三个 div 给定 100 * 100 的红色盒子
+		* 写三个 span 要求 150 * 150 的绿色盒子
+		* 写三个 a 链接 80 * 20 的蓝色盒子，要求一行显示
+		* 鼠标经过 a 的时候背景色变为橘色
+
+		主要考察：行内元素与块级元素的理解以及相互转换
+
+		块级元素特点：
+		1） 独占一行，纵向排列；
+		2） 如果没有指定宽度，默认宽度是 100%
+		3） 可以设置宽高；
+		行内元素特点：
+		1）横向排列；
+		2）默认宽度包裹内容；
+		3）对其设置宽度和高度无效；
+		行内元素和块级元素可以相互转换：
+		1）块级元素转换成行内元素：display: inline; 则可以横向排列
+		2）行内元素转换成块级元素：display:block;则可以设置宽高
+		3) 块级元素和行内元素变为行内块元素：display:inline-block;
+	 -->
+
+	 <div>div1</div>
+	 <div>div2</div>
+	 <div>div3</div>
+
+	 <span>span1</span>
+	 <span>span2</span>
+	 <span>span3</span>
+
+	 <a href="#">a1</a>
+	 <a href="#">a2</a>
+	 <a href="#">a3</a>
+</body>
+</html>

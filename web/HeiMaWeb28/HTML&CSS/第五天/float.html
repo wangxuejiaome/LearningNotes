@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>浮动</title>
+	<style type="text/css">
+		.one {
+			background: red;
+			float: left;
+		}
+		.two {
+			background: green;
+		}
+		.three {
+			background: blue;
+		}
+	</style>
+</head>
+<body>
+	<dl>
+		<dt>浮动的目的：让多个块元素在同一行显示。</dt>
+	</dl>
+	<dl>
+		<dt>最核心的关键点：怎么排列的、是否占有位置。</dt>
+	</dl>
+	<dl>
+		<dt>浮动的特性：浮动的盒子要和标准流的父级搭配使用</dt>
+		<dd>浮动的元素总是找它最近的父级元素对齐，但不会超出内边距；</dd>
+		<dd>浮动元素的排列位置，跟上一个元素（块级）有关系。如果上一个元素有浮动，则 A 元素顶部会和上一个元素的顶部对齐；如果上一个元素是标准流，则 A 元素的顶部会和上一个元素的底部对齐。</dd>
+		<dd>浮动可以让元素默认转换为行内块元素的特性</dd>
+	</dl>
+
+	<div class="one">
+		one
+	</div>
+	<div class="two">
+		two
+	</div>
+	<div class="three">
+		three
+	</div>
+</body>
+</html>

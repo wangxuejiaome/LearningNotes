@@ -1,0 +1,21 @@
+.nav {
+	text-align: center;
+	/*行内元素、行内块元素可以看似是文本，
+	这样可以使用 text-align 让它们居中对齐*/
+}
+.nav a {/*后代选择器*/
+	width: 120px;
+	height: 58px;
+	color:#fff;
+	/*行高等于标签的高度，可以让单行文本垂直居中*/
+	line-height: 58px;
+	text-align: center;
+	text-decoration: none;
+	background-color: blue;
+	display: inline-block;
+	background-image: url(../images/nav_bg.png);
+}
+
+a:hover{
+	background-image: url(../images/hover_bg.png);
+}

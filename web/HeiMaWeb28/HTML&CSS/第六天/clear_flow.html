@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>清除浮动</title>
+</head>
+<body>
+	<ul>
+		<li>
+			清除浮动的本质：解决父级元素因为子级元素浮动引起的高度为 0 的问题。
+		</li>
+		<li>
+			清除浮动的方法：清除浮动叫闭合浮动更好一些，清除浮动就是把浮动的盒子圈到里面。这样子元素就不会脱标，影响后面元素的布局了。
+			<ol>
+				<li>额外标签法：最后一个浮动标签后，新添加一个标签清除浮动</li>
+				<li>overflow：给父元素加 overflow:hidden</li>
+				<li>伪元素清除浮动：记住固定格式即可
+					<br />
+				.clearfix:after {
+				content:"";
+				display: block;
+				height:0;
+				clear:both;
+				visibility:hidden;
+			}
+			<br />
+			.clearfix{
+			*zoom: 1; // 针对 IE6、7 版本
+		}
+			</li>
+				<li>
+					before 和 after 双伪元素清除浮动（记住格式）：
+					<br />
+					.clearfix:before,.clearfix:after {
+					content: "";
+					display: table;
+				    }
+				    <br />
+				    .clearfixe:after{
+				    clear:both;
+				}
+				<br />
+				.clearfix{
+			*zoom: 1; // 针对 IE6、7 版本
+		}
+
+				</li>
+			</ol>
+		</li>
+		<li></li>
+		<li></li>
+	</ul> 
+</body>
+</html>
