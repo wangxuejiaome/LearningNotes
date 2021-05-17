@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.love_space">
    <application
-        android:label="love_space"
+        android:label="爱吧"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
