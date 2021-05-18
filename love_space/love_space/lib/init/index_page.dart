@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:love_space/home/home_page.dart';
 import 'package:love_space/learn/learn_page.dart';
 import 'package:love_space/mine/mine_page.dart';
+import 'package:love_space/res/color.dart';
 import 'package:love_space/util/utils.dart';
 
 class IndexPage extends StatefulWidget {
@@ -56,6 +57,7 @@ class _IndexPageState extends State<IndexPage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         items: bottomTabs,
+        fixedColor: Colours.text_primary,
         onTap: (index) {
           setState(() {
             currentIndex = index;
