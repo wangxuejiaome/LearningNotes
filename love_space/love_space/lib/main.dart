@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:love_space/init/guide.dart';
-import 'package:love_space/init/index_page.dart';
+import 'package:love_space/init/splash_page.dart';
+
+import 'init/guide.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      routes: {
+        // 注册路由
+        "/init/guide": (context) => GuidePage(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new GuidePage(),
+      home: new SplashPage(),
     );
   }
 }

@@ -13,6 +13,14 @@ class _GuidePageState extends State<GuidePage> {
   ];
   int currentIndex = 0;
 
+  // void _goHomePage(BuildContext context) {
+  //   if (SpUtil.getString(PreferencesKey.token).isEmpty) {
+  //     NavigatorUtils.push(context, EntranceRouter.loginPage, replace: true);
+  //   } else {
+  //     NavigatorUtils.push(context, HomeRouter.mainPage, replace: true);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
