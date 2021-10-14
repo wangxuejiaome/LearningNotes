@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_space/init/login.dart';
 import 'package:love_space/util/utils.dart';
 
 class GuidePage extends StatefulWidget {
@@ -36,7 +37,9 @@ class _GuidePageState extends State<GuidePage> {
                   bottom: MediaQuery.of(context).size.height * 0.2,
                   child: OutlinedButton(
                       onPressed: () {
-                        // todo 调转到下一页
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                          return LoginPage();
+                        }));
                       },
                       child: Text("立即体验")))
             ],
