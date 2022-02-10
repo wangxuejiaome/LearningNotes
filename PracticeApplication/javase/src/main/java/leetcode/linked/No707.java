@@ -1,5 +1,7 @@
 package leetcode.linked;
 
+import java.util.Locale;
+
 /**
  * author : wangxuejiao@leoao.com
  * date   : 2022/1/27
@@ -16,21 +18,17 @@ public class No707 {
 
     public static void main(String[] args) {
         MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.addAtIndex(0,0);
 //        System.out.println("get 0: " + myLinkedList.get(0));
-        myLinkedList.addAtHead(1);
-//        System.out.println("get 0: " + myLinkedList.get(0));
-        myLinkedList.addAtTail(3);
-//        System.out.println("get 1: " + myLinkedList.get(1));
-        myLinkedList.addAtIndex(1,2);
-//        System.out.println("get 1: " + myLinkedList.get(1));
-        myLinkedList.deleteAtIndex(1);
-        System.out.println("get 1: " + myLinkedList.get(1));
+
+        myLinkedList.printLinkedList(myLinkedList);
     }
 }
 
 class MyLinkedList {
 
-    int val;
+    final int nullValue = -1;
+    int val = nullValue;
     MyLinkedList next;
 
     public MyLinkedList() {
@@ -43,11 +41,15 @@ class MyLinkedList {
     }
 
     public int get(int index) {
-        if(index < 0) {
+        if(this.val == nullValue || index < 0) {
             return -1;
+        }
+
+        if(index == 0) {
+            return this.val;
         } else {
-            int position = -1;
-            MyLinkedList pNode = new MyLinkedList(0,this);
+            int position = 0;
+            MyLinkedList pNode = this;
             while(position < index) {
                 if(pNode.next == null) {
                     break;
@@ -56,12 +58,12 @@ class MyLinkedList {
                     position++;
                 }
             }
-            return (position == index && pNode.val != 0) ?  pNode.val : -1;
+            return (position == index) ?  pNode.val : nullValue;
         }
     }
 
     public void addAtHead(int val) {
-        if(this.val == 0) {
+        if(this.val == nullValue) {
             this.next = null;
         } else {
             this.next = new MyLinkedList(this.val,this.next);
@@ -70,7 +72,7 @@ class MyLinkedList {
     }
 
     public void addAtTail(int val) {
-        if(this.val == 0) {
+        if(this.val == -1) {
             addAtHead(val);
         } else {
             MyLinkedList pNode = this;
@@ -84,7 +86,7 @@ class MyLinkedList {
     }
 
     public void addAtIndex(int index, int val) {
-        if(index < 0) {
+        if(index <= 0) {
             addAtHead(val);
         } else {
             int position = 0;
@@ -104,9 +106,20 @@ class MyLinkedList {
     }
 
     public void deleteAtIndex(int index) {
-        if(this.val != 0 && index >= 0) {
-            int position = -1;
-            MyLinkedList pNode = new MyLinkedList(0,this);
+        if(this.val == nullValue || index < 0) {
+            return;
+        }
+        if(index == 0) {
+            if(this.next == null) {
+                this.val = nullValue;
+                this.next = null;
+            } else {
+                this.val = this.next.val;
+                this.next = this.next.next;
+            }
+        } else {
+            int position = 0;
+            MyLinkedList pNode = this;
             while(position < index - 1) {
                 if(pNode.next == null) {
                     break;
@@ -120,4 +133,27 @@ class MyLinkedList {
             }
         }
     }
+
+    public void printLinkedList(MyLinkedList linkedList) {
+        String linkedStr = "";
+        MyLinkedList pNode = new MyLinkedList(0,linkedList);
+        while (pNode.next != null) {
+            pNode = pNode.next;
+            linkedStr = linkedStr + (pNode.val + "->");
+        }
+        System.out.println(linkedStr);
+    }
 }
+
+
+/**
+ *     public void addAtHead(int val) {
+ *         if(this.val == nullValue) {
+ *             this.next = null;
+ *         } else {
+ *             this.next = new MyLinkedList(this.val,this.next);
+ *         }
+ *         this.val = val;
+ *     }
+ *     可以优化成：this.next = new MyLinkedList (this.val,this.next); this.val = val;
+ */

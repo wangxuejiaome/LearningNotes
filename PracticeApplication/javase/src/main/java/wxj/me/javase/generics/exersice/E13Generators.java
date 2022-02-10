@@ -1,7 +1,5 @@
 package wxj.me.javase.generics.exersice;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -69,7 +67,7 @@ public class E13Generators {
         }
         System.out.println();
 
-        Set <Integer> set = fill(new HashSet<Integer>(),new Fibonacci(),4);
+        Set<Integer> set = fill(new HashSet<Integer>(), new Fibonacci(), 4);
         for (Integer i : set) {
             System.out.print(i + ",");
         }
